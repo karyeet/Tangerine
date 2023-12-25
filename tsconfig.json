@@ -4,9 +4,11 @@
     "rootDir": "./src",
     "outDir": "build",
     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "target": "es2020",
   },
   "include": [
     "src/**/*.ts",
     "test/**/*.ts"
-  ]
+  ],
 }

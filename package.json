@@ -1,0 +1,31 @@
+{
+  "name": "mandarin2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm.cmd run compile",
+    "pretest": "npm.cmd run compile",
+    "posttest": "npm.cmd run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karyeet/Mandarin2.git"
+  },
+  "author": "karyeet",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/karyeet/Mandarin2/issues"
+  },
+  "homepage": "https://github.com/karyeet/Mandarin2#readme",
+  "devDependencies": {
+    "gts": "^5.2.0",
+    "typescript": "^5.3.3",
+    "@types/node": "20.8.2"
+  }
+}

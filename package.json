@@ -24,8 +24,15 @@
   },
   "homepage": "https://github.com/karyeet/Mandarin2#readme",
   "devDependencies": {
+    "@types/node": "20.8.2",
     "gts": "^5.2.0",
-    "typescript": "^5.3.3",
-    "@types/node": "20.8.2"
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "bufferutil": "^4.0.8",
+    "discord.js": "^14.14.1",
+    "shoukaku": "^4.0.1",
+    "utf-8-validate": "^6.0.3",
+    "zlib-sync": "^0.1.9"
   }
 }

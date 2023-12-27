@@ -41,7 +41,6 @@ export class PlayableTrack {
   public readonly artwork: string;
   public readonly isLiveStream: boolean;
   public readonly trackDuration: Number;
-  public readonly requester: string;
 
   constructor(
     encoded: string,
@@ -49,8 +48,7 @@ export class PlayableTrack {
     author: string,
     artwork: string,
     isLiveStream = false,
-    trackDuration = 0,
-    requester = ''
+    trackDuration = 0
   ) {
     this.lavalinkEncoded = encoded;
     this.title = title;
@@ -58,6 +56,5 @@ export class PlayableTrack {
     this.artwork = artwork;
     this.isLiveStream = isLiveStream;
     this.trackDuration = trackDuration;
-    this.requester = requester;
   }
 }

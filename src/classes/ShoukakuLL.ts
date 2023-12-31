@@ -2,6 +2,7 @@ import type {Client} from 'discord.js';
 
 import {Shoukaku, Connectors, NodeOption, NodeInfo} from 'shoukaku';
 import {
+  JoinResponse,
   LavalinkAbstract,
   LoadResultType,
   PlayResponse,
@@ -58,7 +59,7 @@ export class ShoukakuLL extends LavalinkAbstract {
     guildId: string,
     channelId: string,
     shardId = 0 // if unsharded it will always be zero
-  ): Promise<boolean> {
+  ): Promise<JoinResponse> {
     const player = await this.shoukakuClient.joinVoiceChannel({
       guildId,
       channelId,
@@ -66,9 +67,9 @@ export class ShoukakuLL extends LavalinkAbstract {
       deaf: true,
     });
     if (player) {
-      return true;
+      return JoinResponse.OK;
     } else {
-      return false;
+      return JoinResponse.errorGeneric;
     }
   }
 

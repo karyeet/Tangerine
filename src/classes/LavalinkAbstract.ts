@@ -24,7 +24,13 @@ export interface ResolveResponse {
 }
 
 export enum PlayResponse {
-  notInVoiceChannel = 'Bot is not in a voice channel.',
+  notInVoiceChannel = 'I am not in a voice channel.',
+  OK = 'OK',
+}
+
+export enum JoinResponse {
+  alreadyInVoiceChannel = 'I am already in a voice channel',
+  errorGeneric = 'There was a problem joining the voice channel',
   OK = 'OK',
 }
 
@@ -40,7 +46,7 @@ export abstract class LavalinkAbstract {
     guildid: string,
     channelid: string,
     shardId: number
-  ): Promise<boolean>;
+  ): Promise<JoinResponse>;
 
   // return playable track / playlist
   abstract resolve(query: string): Promise<ResolveResponse>;

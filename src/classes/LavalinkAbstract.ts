@@ -45,7 +45,7 @@ export abstract class LavalinkAbstract {
   abstract joinVoiceChannel(
     guildid: string,
     channelid: string,
-    shardId: number
+    shardId?: number
   ): Promise<JoinResponse>;
 
   // return playable track / playlist

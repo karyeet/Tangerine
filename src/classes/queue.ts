@@ -34,6 +34,10 @@ export class Queue {
     return this.currentTrack;
   }
 
+  public push(item: queueItem) {
+    this.queue.push(item);
+  }
+
   constructor() {
     this.queue = [];
   }

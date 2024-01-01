@@ -47,7 +47,7 @@ export abstract class LavalinkAbstract {
     channelid: string,
     shardId?: number
   ): Promise<JoinResponse>;
-
+  abstract leaveVoiceChannel(guildId: string): Promise<void>;
   // return playable track / playlist
   abstract resolve(query: string): Promise<ResolveResponse>;
 

@@ -55,11 +55,18 @@ export class ShoukakuLL extends LavalinkAbstract {
       throw Error('getInfo returned incomplete information');
     }
   }
+  public async leaveVoiceChannel(guildId: string): Promise<void> {
+    return await this.shoukakuClient.leaveVoiceChannel(guildId);
+  }
+
   public async joinVoiceChannel(
     guildId: string,
     channelId: string,
     shardId = 0 // if unsharded it will always be zero
   ): Promise<JoinResponse> {
+    if (this.shoukakuClient.players.get(guildId)) {
+      return JoinResponse.alreadyInVoiceChannel;
+    }
     const player = await this.shoukakuClient.joinVoiceChannel({
       guildId,
       channelId,

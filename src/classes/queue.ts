@@ -1,5 +1,5 @@
 export class Queue {
-  private queue: queueItem[];
+  public readonly queue: queueItem[];
   private loopingTrack = false;
   private loopingQueue = false;
 

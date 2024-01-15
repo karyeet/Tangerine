@@ -22,7 +22,7 @@ export class Mandarine {
       try {
         this.leaveVoiceChannel(guildId);
       } catch (err) {
-        console.warn('Error while leaving voice channel:', err);
+        console.error('Error while leaving voice channel:', err);
       }
     }
 

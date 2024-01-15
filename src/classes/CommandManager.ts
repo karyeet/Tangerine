@@ -63,7 +63,7 @@ export class CommandManager {
       );
       return true;
     } catch (error) {
-      console.warn('Error while refreshing commands:\n', error);
+      console.error('Error while refreshing commands:\n', error);
       return false;
     }
   }

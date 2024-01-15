@@ -14,7 +14,10 @@ module.exports = {
     }
 
     if (!channelId) {
-      await interaction.reply('You must be in a voice channel.');
+      await interaction.reply({
+        content: 'You must be in a voice channel.',
+        ephemeral: true,
+      });
       return false;
     }
 
@@ -25,10 +28,16 @@ module.exports = {
     );
 
     if (response === JoinResponse.OK) {
-      await interaction.reply('Joined!');
+      await interaction.reply({
+        content: 'Joined!',
+        ephemeral: true,
+      });
       return true;
     } else {
-      await interaction.reply(response);
+      await interaction.reply({
+        content: response,
+        ephemeral: true,
+      });
       return false;
     }
   },

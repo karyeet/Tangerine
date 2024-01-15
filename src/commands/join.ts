@@ -4,7 +4,7 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import {JoinResponse} from '../classes/LavalinkAbstract';
-import {Mandarine} from '../classes/mandarine';
+import type {Mandarine} from '../classes/mandarine';
 
 module.exports = {
   data: new SlashCommandBuilder()

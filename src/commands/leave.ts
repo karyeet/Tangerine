@@ -1,5 +1,5 @@
 import {ChatInputCommandInteraction, SlashCommandBuilder} from 'discord.js';
-import {Mandarine} from '../classes/mandarine';
+import type {Mandarine} from '../classes/mandarine';
 
 module.exports = {
   data: new SlashCommandBuilder()

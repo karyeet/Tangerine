@@ -3,9 +3,9 @@ import {JoinResponse, LavalinkAbstract} from './LavalinkAbstract';
 import {Queue} from './queue';
 
 export class Mandarine {
-  lavalink: LavalinkAbstract;
-  discordClient: Client;
-  guildQueues: Map<string, Queue> = new Map();
+  public lavalink: LavalinkAbstract;
+  public discordClient: Client;
+  private guildQueues: Map<string, Queue> = new Map();
 
   constructor(lavalink: LavalinkAbstract, client: Client) {
     this.lavalink = lavalink;
@@ -31,5 +31,16 @@ export class Mandarine {
 
   public async leaveVoiceChannel(guildId: string): Promise<void> {
     return await this.lavalink.leaveVoiceChannel(guildId);
+  }
+
+  public getQueue(guildId: string) {
+    const queue = this.guildQueues.get(guildId);
+    if (queue) {
+      return queue;
+    } else {
+      const newQueue = new Queue();
+      this.guildQueues.set(guildId, newQueue);
+      return newQueue;
+    }
   }
 }

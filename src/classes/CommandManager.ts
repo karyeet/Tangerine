@@ -26,6 +26,9 @@ export class CommandManager {
 
   public async loadCommands(pathToCommands: string) {
     // Grab all the commands
+    this.commandsJSON = [];
+    this.commands = {};
+
     const commandsPath: string = path.join(pathToCommands);
     const commandFiles: string[] = fs
       .readdirSync(commandsPath)

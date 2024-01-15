@@ -8,6 +8,9 @@ import {REST, Routes} from 'discord.js';
 
 import type {Mandarine} from './mandarine';
 
+import path from 'path';
+import fs from 'fs';
+
 interface SlashCommand {
   data: SlashCommandBuilder;
   execute: Function;
@@ -16,7 +19,6 @@ interface SlashCommand {
 export class CommandManager {
   private commandsJSON: RESTPostAPIChatInputApplicationCommandsJSONBody[] = [];
   private commands: {[key: string]: SlashCommand} = {};
-  private rest = new REST().setToken(token);
 
   constructor(pathToCommands = '../commands') {
     this.loadCommands(pathToCommands);
@@ -24,10 +26,10 @@ export class CommandManager {
 
   public async loadCommands(pathToCommands: string) {
     // Grab all the commands
-    const commandsPath: String = path.join(pathToCommands);
-    const commandFiles: String[] = fs
+    const commandsPath: string = path.join(pathToCommands);
+    const commandFiles: string[] = fs
       .readdirSync(commandsPath)
-      .filter((file: String) => file.endsWith('.js'));
+      .filter((file: string) => file.endsWith('.js'));
     for (const file of commandFiles) {
       const filePath: string = path.join(commandsPath, file);
       const command: SlashCommand = require(filePath);
@@ -42,13 +44,14 @@ export class CommandManager {
     }
   }
 
-  public async registerCommands(clientId: string) {
+  public async registerCommands(clientId: string, token: string) {
     try {
       console.log(
-        `Started refreshing ${commands.length} application (/) commands.`
+        `Started refreshing ${this.commands.length} application (/) commands.`
       );
+      const rest = new REST().setToken(token);
 
-      const data = await rest.put(Routes.applicationCommands(clientId), {
+      const data: any = await rest.put(Routes.applicationCommands(clientId), {
         body: this.commandsJSON,
       });
 

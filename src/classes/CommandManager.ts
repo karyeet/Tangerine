@@ -22,7 +22,7 @@ export class CommandManager {
     this.loadCommands(pathToCommands);
   }
 
-  private async loadCommands(pathToCommands: string) {
+  public async loadCommands(pathToCommands: string) {
     // Grab all the commands
     const commandsPath: String = path.join(pathToCommands);
     const commandFiles: String[] = fs
@@ -42,7 +42,7 @@ export class CommandManager {
     }
   }
 
-  private async registerCommands(clientId: string) {
+  public async registerCommands(clientId: string) {
     try {
       console.log(
         `Started refreshing ${commands.length} application (/) commands.`
@@ -62,7 +62,7 @@ export class CommandManager {
     }
   }
 
-  private async executeCommand(
+  public async executeCommand(
     commandName: string,
     interaction: CommandInteraction,
     mandarine: Mandarine

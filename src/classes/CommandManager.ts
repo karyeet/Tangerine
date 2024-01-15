@@ -29,7 +29,7 @@ export class CommandManager {
     this.commandsJSON = [];
     this.commands = {};
 
-    const commandsPath: string = path.join(pathToCommands);
+    const commandsPath: string = path.join(__dirname, pathToCommands);
     const commandFiles: string[] = fs
       .readdirSync(commandsPath)
       .filter((file: string) => file.endsWith('.js'));
@@ -50,7 +50,7 @@ export class CommandManager {
   public async registerCommands(clientId: string, token: string) {
     try {
       console.log(
-        `Started refreshing ${this.commands.length} application (/) commands.`
+        `Started refreshing ${this.commandsJSON.length} application (/) commands.`
       );
       const rest = new REST().setToken(token);
 

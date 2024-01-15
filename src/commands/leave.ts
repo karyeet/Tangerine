@@ -1,11 +1,14 @@
-import {CommandInteraction, SlashCommandBuilder} from 'discord.js';
+import {ChatInputCommandInteraction, SlashCommandBuilder} from 'discord.js';
 import {Mandarine} from '../classes/mandarine';
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('leave')
     .setDescription('Leave your voice channel.'),
-  async execute(interaction: CommandInteraction, mandarine: Mandarine) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    mandarine: Mandarine
+  ) {
     if (!interaction.guildId) {
       await interaction.reply('This command only works in servers');
       return false;

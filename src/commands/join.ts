@@ -1,4 +1,8 @@
-import {CommandInteraction, GuildMember, SlashCommandBuilder} from 'discord.js';
+import {
+  ChatInputCommandInteraction,
+  GuildMember,
+  SlashCommandBuilder,
+} from 'discord.js';
 import {JoinResponse} from '../classes/LavalinkAbstract';
 import {Mandarine} from '../classes/mandarine';
 
@@ -6,7 +10,10 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('join')
     .setDescription('Join your voice channel.'),
-  async execute(interaction: CommandInteraction, mandarine: Mandarine) {
+  async execute(
+    interaction: ChatInputCommandInteraction,
+    mandarine: Mandarine
+  ) {
     const channelId = (interaction.member as GuildMember).voice.channelId;
     if (!interaction.guildId) {
       await interaction.reply('This command only works in servers');

@@ -7,6 +7,7 @@ import {
   LoadResultType,
   PlayResponse,
   ResolveResponse,
+  PlayerEvent,
 } from './LavalinkAbstract';
 
 import {PlayableTrack, Playlist} from './queue';
@@ -151,6 +152,45 @@ export class ShoukakuLL extends LavalinkAbstract {
       return PlayResponse.OK;
     } else {
       return PlayResponse.notInVoiceChannel;
+    }
+  }
+
+  public async pause(guildid: string): Promise<boolean> {
+    const player = this.shoukakuClient.players.get(guildid);
+    if (player) {
+      player.setPaused(true);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public async resume(guildid: string): Promise<boolean> {
+    const player = this.shoukakuClient.players.get(guildid);
+    if (player) {
+      player.setPaused(false);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public on(
+    event: PlayerEvent,
+    listener: (data: any) => void,
+    guildid: string
+  ): boolean {
+    const player = this.shoukakuClient.players.get(guildid);
+    if (player) {
+      player.on(event as string as any, listener);
+      return true;
+    } else {
+      console.error(
+        'Could not find player for guildid ' +
+          guildid +
+          ' when adding event listener'
+      );
+      return false;
     }
   }
 }

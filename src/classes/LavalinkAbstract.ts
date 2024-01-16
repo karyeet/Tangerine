@@ -34,6 +34,16 @@ export enum JoinResponse {
   OK = 'OK',
 }
 
+export enum PlayerEvent {
+  TrackEnd = 'end',
+  TrackStuck = 'stuck',
+  TrackStart = 'start',
+  TrackException = 'exception',
+  Resumed = 'resumed',
+  WsClosed = 'closed',
+  Update = 'update',
+}
+
 export abstract class LavalinkAbstract {
   // object matching Lavalink REST docs https://lavalink.dev/api/rest.html#get-lavalink-info
   abstract getInfo(): Promise<object | undefined>;
@@ -41,6 +51,10 @@ export abstract class LavalinkAbstract {
   abstract getFilters(): Promise<Array<string>>;
   // array of available sources names
   abstract getSources(): Promise<Array<string>>;
+  // pause playback
+  abstract pause(guildiId: string): Promise<boolean>;
+  // resume playback
+  abstract resume(guildId: string): Promise<boolean>;
   // join the voice channel
   abstract joinVoiceChannel(
     guildid: string,
@@ -56,4 +70,6 @@ export abstract class LavalinkAbstract {
     guildid: string,
     track: PlayableTrack
   ): Promise<PlayResponse>;
+
+  abstract on(event: PlayerEvent, func: Function, guildid: string): boolean;
 }

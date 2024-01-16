@@ -10,10 +10,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('join')
     .setDescription('Join your voice channel.'),
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    musicbot: Musicbot
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, musicbot: Musicbot) {
     const channelId = (interaction.member as GuildMember).voice.channelId;
     if (!interaction.guildId) {
       await interaction.reply('This command only works in servers');

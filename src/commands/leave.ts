@@ -5,10 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('leave')
     .setDescription('Leave your voice channel.'),
-  async execute(
-    interaction: ChatInputCommandInteraction,
-    musicbot: Musicbot
-  ) {
+  async execute(interaction: ChatInputCommandInteraction, musicbot: Musicbot) {
     if (!interaction.guildId) {
       await interaction.reply('This command only works in servers');
       return false;

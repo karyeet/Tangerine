@@ -21,6 +21,9 @@ export class ShoukakuLL extends LavalinkAbstract {
       new Connectors.DiscordJS(discordClient),
       Nodes
     );
+    this.shoukakuClient.on('error', error => {
+      console.error('Shoukaku error:', error);
+    });
   }
 
   private getNodeWithLeastLoad() {
@@ -96,7 +99,7 @@ export class ShoukakuLL extends LavalinkAbstract {
     const author = data?.pluginInfo?.author || '';
     const artwork = data?.pluginInfo?.artworkUrl || '';
     const tracks: PlayableTrack[] = [];
-    for (const trackdata in data.tracks) {
+    for (const trackdata of data.tracks) {
       tracks.push(this.LLToPlayableTrack(trackdata));
     }
 
@@ -182,7 +185,7 @@ export class ShoukakuLL extends LavalinkAbstract {
   ): boolean {
     const player = this.shoukakuClient.players.get(guildid);
     if (player) {
-      player.on(event as string as any, listener);
+      player.on(event as any, listener);
       return true;
     } else {
       console.error(

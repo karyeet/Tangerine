@@ -28,7 +28,8 @@ export class Queue {
   // shift if not looping
   public next(force = false): PlayableTrack | undefined {
     if (!this.loopingTrack || force === true) {
-      this.currentTrack = this.queue[0].upNext(this.queue, this.loopingQueue);
+      this.currentTrack =
+        this.queue[0]?.upNext(this.queue, this.loopingQueue) || undefined;
     }
 
     return this.currentTrack;

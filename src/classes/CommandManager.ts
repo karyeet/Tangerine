@@ -6,7 +6,7 @@ import type {
 
 import {REST, Routes} from 'discord.js';
 
-import type {Mandarine} from './mandarine';
+import type {Musicbot} from './musicbot';
 
 import path from 'path';
 import fs from 'fs';
@@ -71,10 +71,10 @@ export class CommandManager {
   public async executeCommand(
     commandName: string,
     interaction: CommandInteraction,
-    mandarine: Mandarine
+    musicbot: Musicbot
   ) {
     if (commandName in this.commands) {
-      await this.commands[commandName].execute(interaction, mandarine);
+      await this.commands[commandName].execute(interaction, musicbot);
     } else {
       console.warn(`Command ${commandName} was called, but not found.`);
     }

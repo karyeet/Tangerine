@@ -33,10 +33,10 @@ export class Musicbot {
     return await this.lavalink.leaveVoiceChannel(guildId);
   }
 
-  public getQueue(guildId: string) {
-    const queue = this.guildPlaybackManagers.get(guildId);
-    if (queue) {
-      return queue;
+  public getPlaybackManager(guildId: string) {
+    const playbackManager = this.guildPlaybackManagers.get(guildId);
+    if (playbackManager) {
+      return playbackManager;
     } else {
       const newPlaybackManager = new PlaybackManager(this, guildId);
       this.guildPlaybackManagers.set(guildId, newPlaybackManager);

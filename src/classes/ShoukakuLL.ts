@@ -68,9 +68,9 @@ export class ShoukakuLL extends LavalinkAbstract {
     channelId: string,
     shardId = 0 // if unsharded it will always be zero
   ): Promise<JoinResponse> {
-    if (this.shoukakuClient.players.get(guildId)) {
-      return JoinResponse.alreadyInVoiceChannel;
-    }
+    //    if (this.shoukakuClient.players.get(guildId)) {
+    //      return JoinResponse.alreadyInVoiceChannel;
+    //    }
     const player = await this.shoukakuClient.joinVoiceChannel({
       guildId,
       channelId,

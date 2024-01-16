@@ -1,11 +1,11 @@
 import type {Client} from 'discord.js';
 import {JoinResponse, LavalinkAbstract} from './LavalinkAbstract';
-import {Queue} from './queue';
+import {PlaybackManager} from './PlaybackManager';
 
 export class Musicbot {
   public lavalink: LavalinkAbstract;
   public discordClient: Client;
-  private guildQueues: Map<string, Queue> = new Map();
+  private guildPlaybackManagers: Map<string, PlaybackManager> = new Map();
 
   constructor(lavalink: LavalinkAbstract, client: Client) {
     this.lavalink = lavalink;
@@ -34,13 +34,13 @@ export class Musicbot {
   }
 
   public getQueue(guildId: string) {
-    const queue = this.guildQueues.get(guildId);
+    const queue = this.guildPlaybackManagers.get(guildId);
     if (queue) {
       return queue;
     } else {
-      const newQueue = new Queue();
-      this.guildQueues.set(guildId, newQueue);
-      return newQueue;
+      const newPlaybackManager = new PlaybackManager(this, guildId);
+      this.guildPlaybackManagers.set(guildId, newPlaybackManager);
+      return newPlaybackManager;
     }
   }
 }

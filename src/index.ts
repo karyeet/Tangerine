@@ -2,7 +2,7 @@ import {Client, Events, GatewayIntentBits} from 'discord.js';
 // eslint-disable-next-line node/no-unpublished-import
 import {token, node} from '../config.json';
 import {ShoukakuLL} from './classes/ShoukakuLL';
-import {Mandarine} from './classes/mandarine';
+import {Musicbot} from './classes/musicbot';
 import {CommandManager} from './classes/CommandManager';
 
 const Nodes = [node];
@@ -11,7 +11,7 @@ const client = new Client({
 });
 
 const lavalink = new ShoukakuLL(client, Nodes);
-const mandarine = new Mandarine(lavalink, client);
+const musicbot = new Musicbot(lavalink, client);
 const commandManager = new CommandManager();
 
 client.once(Events.ClientReady, readyClient => {
@@ -26,7 +26,7 @@ client.on(Events.InteractionCreate, async interaction => {
     await commandManager.executeCommand(
       interaction.commandName,
       interaction,
-      mandarine
+      musicbot
     );
   } catch (error) {
     console.error(error);

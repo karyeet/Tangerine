@@ -5,18 +5,18 @@ export class Queue {
 
   private currentTrack: PlayableTrack | undefined;
 
-  public get getLength(): number {
+  public getLength(): number {
     return this.queue.length;
   }
 
-  public get isTrackLooping(): boolean {
+  public isTrackLooping(): boolean {
     return this.loopingTrack;
   }
-  public get isQueueLooping(): boolean {
+  public isQueueLooping(): boolean {
     return this.loopingQueue;
   }
 
-  public get getCurrentTrack(): PlayableTrack | undefined {
+  public getCurrentTrack(): PlayableTrack | undefined {
     return this.currentTrack;
   }
 

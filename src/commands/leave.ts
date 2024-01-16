@@ -1,5 +1,5 @@
 import {ChatInputCommandInteraction, SlashCommandBuilder} from 'discord.js';
-import type {Mandarine} from '../classes/mandarine';
+import type {Musicbot} from '../classes/musicbot';
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -7,14 +7,14 @@ module.exports = {
     .setDescription('Leave your voice channel.'),
   async execute(
     interaction: ChatInputCommandInteraction,
-    mandarine: Mandarine
+    musicbot: Musicbot
   ) {
     if (!interaction.guildId) {
       await interaction.reply('This command only works in servers');
       return false;
     }
 
-    await mandarine.leaveVoiceChannel(interaction.guildId);
+    await musicbot.leaveVoiceChannel(interaction.guildId);
     await interaction.reply({
       content: 'OK!',
       ephemeral: true,

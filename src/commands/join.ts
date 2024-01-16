@@ -4,7 +4,7 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import {JoinResponse} from '../classes/LavalinkAbstract';
-import type {Mandarine} from '../classes/mandarine';
+import type {Musicbot} from '../classes/musicbot';
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,7 +12,7 @@ module.exports = {
     .setDescription('Join your voice channel.'),
   async execute(
     interaction: ChatInputCommandInteraction,
-    mandarine: Mandarine
+    musicbot: Musicbot
   ) {
     const channelId = (interaction.member as GuildMember).voice.channelId;
     if (!interaction.guildId) {
@@ -28,7 +28,7 @@ module.exports = {
       return false;
     }
 
-    const response: JoinResponse = await mandarine.joinVoiceChannel(
+    const response: JoinResponse = await musicbot.joinVoiceChannel(
       interaction.guildId,
       (interaction.member as GuildMember).voice.channelId as string,
       true

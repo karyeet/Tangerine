@@ -2,7 +2,7 @@ import type {Client} from 'discord.js';
 import {JoinResponse, LavalinkAbstract} from './LavalinkAbstract';
 import {Queue} from './queue';
 
-export class Mandarine {
+export class Musicbot {
   public lavalink: LavalinkAbstract;
   public discordClient: Client;
   private guildQueues: Map<string, Queue> = new Map();

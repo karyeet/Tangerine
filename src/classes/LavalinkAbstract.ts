@@ -16,6 +16,7 @@ export enum LoadResultType {
   playlist = 'playlist',
   empty = 'empty',
   error = 'error',
+  search = 'search',
 }
 
 export interface ResolveResponse {

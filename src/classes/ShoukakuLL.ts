@@ -129,7 +129,11 @@ export class ShoukakuLL extends LavalinkAbstract {
           loadType: LoadResultType.playlist,
           data: this.LLToPlaylist(result.data),
         };
-
+      case 'search':
+        return {
+          loadType: LoadResultType.track,
+          data: this.LLToPlayableTrack(result.data[0]),
+        };
       case 'empty':
         return {
           loadType: LoadResultType.empty,

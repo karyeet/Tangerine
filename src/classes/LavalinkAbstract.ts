@@ -71,5 +71,7 @@ export abstract class LavalinkAbstract {
     track: PlayableTrack
   ): Promise<PlayResponse>;
 
+  abstract stopTrack(guildid: string): Promise<boolean>;
+
   abstract on(event: PlayerEvent, func: Function, guildid: string): boolean;
 }

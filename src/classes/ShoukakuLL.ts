@@ -196,4 +196,14 @@ export class ShoukakuLL extends LavalinkAbstract {
       return false;
     }
   }
+
+  public async stopTrack(guildid: string): Promise<boolean> {
+    const player = this.shoukakuClient.players.get(guildid);
+    if (player) {
+      await player.stopTrack();
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

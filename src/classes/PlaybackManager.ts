@@ -8,6 +8,7 @@ export class PlaybackManager extends Queue {
   private progress: number;
   private guildId: string;
   private musicbot: Musicbot;
+  private forceSkipFlag: boolean;
 
   constructor(musicbot: Musicbot, guildId: string) {
     super();
@@ -15,11 +16,14 @@ export class PlaybackManager extends Queue {
     this.isPaused = false;
     this.progress = 0;
     this.guildId = guildId;
+    this.forceSkipFlag = false;
 
     musicbot.lavalink.on(
       PlayerEvent.TrackEnd,
       () => {
-        const nextTrack = this.next();
+        console.log('Starting next track for guild ' + guildId);
+        const nextTrack = this.next(this.forceSkipFlag);
+        this.forceSkipFlag = false;
         if (nextTrack) {
           musicbot.lavalink.playTrack(guildId, nextTrack);
         } else {
@@ -47,5 +51,11 @@ export class PlaybackManager extends Queue {
         this.next() as PlayableTrack
       );
     }
+  }
+
+  public skip(force: boolean) {
+    //const nextTrack = this.next(force);
+    this.forceSkipFlag = force;
+    this.musicbot.lavalink.stopTrack(this.guildId);
   }
 }

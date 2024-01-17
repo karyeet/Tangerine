@@ -16,6 +16,21 @@ export class Queue {
     return this.loopingQueue;
   }
 
+  // track and queue looping are mutually exclusive
+  public setTrackLooping(islooping: boolean): void {
+    this.loopingTrack = islooping;
+    if (islooping) {
+      this.loopingQueue = false;
+    }
+  }
+
+  public setQueueLooping(islooping: boolean): void {
+    this.loopingQueue = islooping;
+    if (islooping) {
+      this.loopingTrack = false;
+    }
+  }
+
   public getCurrentTrack(): PlayableTrack | undefined {
     return this.currentTrack;
   }
@@ -27,6 +42,9 @@ export class Queue {
 
   // shift if not looping
   public next(force = false): PlayableTrack | undefined {
+    if (this.loopingQueue && this.currentTrack) {
+      this.push(this.currentTrack);
+    }
     if (!this.loopingTrack || force === true) {
       this.currentTrack =
         this.queue[0]?.upNext(this.queue, this.loopingQueue) || undefined;
@@ -69,9 +87,6 @@ export class PlayableTrack extends queueItem {
     queue: queueItem[],
     queueLooping: boolean
   ): PlayableTrack | undefined {
-    if (queueLooping) {
-      queue.push(this);
-    }
     queue.shift();
     return this;
   }

@@ -57,6 +57,16 @@ export class Queue {
     this.queue.push(item);
   }
 
+  public removeQueueItem(index: number): queueItem | undefined {
+    // index is 1 based
+    if (index > this.queue.length || index < 1) {
+      return undefined;
+    }
+    // make it 0 based
+    index = index - 1;
+    return this.queue.splice(index, 1)[0];
+  }
+
   constructor() {
     this.queue = [];
   }

@@ -32,6 +32,11 @@ module.exports = {
       await interaction.reply('Invalid query');
       return false;
     }
+
+    /*await interaction.reply({
+      content: 'Loading track!',
+      ephemeral: true,
+    });*/
     // query is a url, provide directly to lavalink
     let result: ResolveResponse;
     try {
@@ -100,7 +105,7 @@ module.exports = {
       playbackManager.push(result.data);
       await interaction.reply({
         content: 'Enqueued ' + result.data.title + ' by ' + result.data.author,
-        ephemeral: true,
+        ephemeral: false,
       });
       // note playback handled by playback manager
       return true;

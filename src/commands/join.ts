@@ -34,7 +34,7 @@ module.exports = {
     if (response === JoinResponse.OK) {
       await interaction.reply({
         content: 'Joined!',
-        ephemeral: true,
+        ephemeral: false,
       });
       return true;
     } else {

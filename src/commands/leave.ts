@@ -14,7 +14,7 @@ module.exports = {
     await musicbot.leaveVoiceChannel(interaction.guildId);
     await interaction.reply({
       content: 'OK!',
-      ephemeral: true,
+      ephemeral: false,
     });
     return true;
   },

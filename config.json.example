@@ -1,0 +1,8 @@
+{
+    "token": "SDgfsdFGSDgfSDgsdfg.DSFgsdfGSDfgds.DSFGSDfs",
+    "node": {
+          "name": "mylavalinknode",
+          "url": "192.168.2.1:2333",
+          "auth": "youshallnotpass"
+    }
+}

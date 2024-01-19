@@ -10,6 +10,7 @@ import {
 import type {Musicbot} from '../classes/musicbot';
 import {queueItem} from '../classes/queue';
 import type {PlaybackManager} from '../classes/PlaybackManager';
+import {secondsToTime} from '../classes/secondsToTime';
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -30,14 +31,6 @@ module.exports = {
     return true;
   },
 };
-
-function secondsToTime(seconds: number) {
-  if (seconds % 60 < 10) {
-    return Math.floor(seconds / 60) + ':0' + Math.floor(seconds % 60);
-  } else {
-    return Math.floor(seconds / 60) + ':' + Math.floor(seconds % 60);
-  }
-}
 
 interface queueEmbedRequirements {
   currentTrack: queueItem | undefined;

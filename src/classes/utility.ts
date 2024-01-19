@@ -9,11 +9,15 @@ export function secondsToTime(seconds: number) {
   }
 }
 
-export function buildEnqueuedEmbed(qItem: queueItem) {
+export function buildQueueItemEmbed(
+  qItem: queueItem,
+  title: string,
+  color = 0xffa500
+) {
   return new EmbedBuilder()
-    .setTitle('Added To Queue')
+    .setTitle(title)
     .setDescription(qItem.title)
-    .setColor(0xffa500)
+    .setColor(color)
     .addFields(
       {
         name: 'Artist',

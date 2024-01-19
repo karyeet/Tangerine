@@ -10,6 +10,7 @@ import {
   type ResolveResponse,
 } from '../classes/LavalinkAbstract';
 import {PlaybackManager} from '../classes/PlaybackManager';
+import {buildEnqueuedEmbed} from '../classes/utility';
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -104,7 +105,7 @@ module.exports = {
       );
       playbackManager.push(result.data);
       await interaction.reply({
-        content: 'Enqueued ' + result.data.title + ' by ' + result.data.author,
+        embeds: [buildEnqueuedEmbed(result.data)],
         ephemeral: false,
       });
       // note playback handled by playback manager

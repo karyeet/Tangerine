@@ -1,6 +1,7 @@
 import {ChatInputCommandInteraction, SlashCommandBuilder} from 'discord.js';
 import type {Musicbot} from '../classes/musicbot';
 import type {queueItem} from '../classes/queue';
+import {buildQueueItemEmbed} from '../classes/utility';
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -44,7 +45,13 @@ module.exports = {
         return false;
       } else {
         await interaction.reply({
-          content: 'Removed #' + index + ': ' + removedItem.title,
+          embeds: [
+            buildQueueItemEmbed(
+              removedItem,
+              'Removed #' + index + ' From Queue',
+              0xff3500
+            ),
+          ],
           ephemeral: false,
         });
         return true;

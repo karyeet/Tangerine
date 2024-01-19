@@ -10,7 +10,7 @@ import {
   type ResolveResponse,
 } from '../classes/LavalinkAbstract';
 import {PlaybackManager} from '../classes/PlaybackManager';
-import {buildEnqueuedEmbed} from '../classes/utility';
+import {buildQueueItemEmbed} from '../classes/utility';
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -105,7 +105,7 @@ module.exports = {
       );
       playbackManager.push(result.data);
       await interaction.reply({
-        embeds: [buildEnqueuedEmbed(result.data)],
+        embeds: [buildQueueItemEmbed(result.data, 'Added To Queue')],
         ephemeral: false,
       });
       // note playback handled by playback manager

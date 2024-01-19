@@ -10,7 +10,7 @@ import {
 import type {Musicbot} from '../classes/musicbot';
 import {queueItem} from '../classes/queue';
 import type {PlaybackManager} from '../classes/PlaybackManager';
-import {secondsToTime} from '../classes/secondsToTime';
+import {secondsToTime} from '../classes/utility';
 
 module.exports = {
   data: new SlashCommandBuilder()

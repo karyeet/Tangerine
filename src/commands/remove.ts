@@ -22,8 +22,10 @@ module.exports = {
       return false;
     }
 
+    const PBM = musicbot.getPlaybackManager(interaction.guildId);
+
     const index = interaction.options.getInteger('index');
-    if (!index) {
+    if (!index || index < 1 || index > PBM.queue.length) {
       await interaction.reply({
         content: 'Please provide a valid index.',
         ephemeral: true,
@@ -31,10 +33,9 @@ module.exports = {
       return false;
     }
 
-    const PBM = musicbot.getPlaybackManager(interaction.guildId);
-
     try {
-      const removedItem: queueItem | undefined = PBM.removeQueueItem(index);
+      // we will give users a 1 indexed queue and so we subtract 1 from the index
+      const removedItem: queueItem | undefined = PBM.removeQueueItem(index - 1);
       if (removedItem === undefined) {
         await interaction.reply({
           content: "I couldn't remove that track.",

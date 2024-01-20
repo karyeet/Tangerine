@@ -45,7 +45,7 @@ module.exports = {
       if (query.match(/^https?:\/\//)) {
         result = await musicbot.lavalink.resolve(query);
       } else {
-        result = await musicbot.lavalink.resolve(`dzsearch:${query}`);
+        result = await musicbot.lavalink.resolve(`spsearch:${query}`);
       }
     } catch (err) {
       await interaction.reply({

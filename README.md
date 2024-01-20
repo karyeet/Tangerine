@@ -9,6 +9,7 @@ Features:
 
 Todo:
 - seek
+- Playlist/album search
 - Docker Container
 - Tests
 - Improve readme

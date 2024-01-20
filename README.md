@@ -9,6 +9,7 @@ Features:
 
 Todo:
 - seek
+- Docker Container
 - Tests
 - Improve readme
 

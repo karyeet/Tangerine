@@ -9,10 +9,12 @@ Features:
 
 Todo:
 - seek
+- Tests
+- Improve readme
 
 ## Setup:
 
-You'll need Node v20 or greater and NPM and a Lavalink node with the Lavasrc plugin installed.
+You'll need Node v20 or greaterm, NPM, and a Lavalink node with the Lavasrc plugin and installed and setup.
 
 1. Clone or download the source: 
 
@@ -38,3 +40,5 @@ You'll need Node v20 or greater and NPM and a Lavalink node with the Lavasrc plu
 7. Start the bot
 
     ```node .```
+
+    

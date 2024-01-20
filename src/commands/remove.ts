@@ -49,7 +49,7 @@ module.exports = {
             buildQueueItemEmbed(
               removedItem,
               'Removed #' + index + ' From Queue',
-              0xff3500
+              {color: 0xff3500}
             ),
           ],
           ephemeral: false,

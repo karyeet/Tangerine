@@ -2,6 +2,7 @@ import {
   type ChatInputCommandInteraction,
   EmbedBuilder,
   type GuildMember,
+  Guild,
 } from 'discord.js';
 import type {queueItem} from './queue';
 import {
@@ -52,8 +53,8 @@ export function buildQueueItemEmbed(
     )
     .setThumbnail(qItem.artwork);
   if (options.requesterAvatarURL && options.requesterName) {
-    embed.setAuthor({
-      name: options.requesterName,
+    embed.setFooter({
+      text: options.requesterName,
       iconURL: options.requesterAvatarURL,
     });
   }
@@ -149,7 +150,9 @@ export async function addToQueue(
       embeds: [
         buildQueueItemEmbed(result.data, 'Added To Queue', {
           requesterName: interaction.member?.user.username,
-          requesterAvatarURL: (interaction.member as GuildMember).avatarURL(),
+          requesterAvatarURL: (
+            interaction.member as GuildMember
+          ).displayAvatarURL(),
         }),
       ],
       ephemeral: false,

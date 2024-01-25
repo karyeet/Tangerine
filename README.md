@@ -6,9 +6,11 @@ Features:
 - Multiple Sources through Lavalink and Lavasrc: YouTube, Spotify, Deezer, Soundcloud, etc
 - Basic functions: join, leave, loop, play, skip, remove from queue
 - Interactive queue command
+- Supports playlists/albums, the entire playlist is shown as a single item until it reaches the front of the queue
 
 Todo:
 - seek
+- expandplaylist command
 - Playlist/album search
 - Docker Container
 - Tests

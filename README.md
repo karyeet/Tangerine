@@ -28,20 +28,21 @@ You'll need Node v20 or greaterm, NPM, and a Lavalink node with the Lavasrc plug
 
     ```cd Tangerine```
 
-3. Install dependencies: 
+3. Copy the example config and rename to config.json
+
+    ```cp config.json.example config.json```
+
+5. Edit and fill out config.json in your favorite text editor
+
+6. Install dependencies: 
 
     ```npm install```
 
-4. Compile typescript: 
+7. Compile typescript: 
 
     ```npm run compile```
 
-5. Copy the example config and rename to config.json
-
-    ```cp config.json.example config.json```
-6. Edit and fill out config.json in your favorite text editor
-
-7. Start the bot
+8. Start the bot
 
     ```node .```
 

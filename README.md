@@ -11,6 +11,7 @@ Features:
 Todo:
 - seek
 - expandplaylist command
+- clear queue
 - Playlist/album search
 - Docker Container
 - Tests

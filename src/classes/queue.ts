@@ -65,6 +65,10 @@ export class Queue {
     }
   }
 
+  public clearQueue() {
+    return this.queue.splice(0, this.queue.length);
+  }
+
   constructor() {
     this.queue = [];
   }

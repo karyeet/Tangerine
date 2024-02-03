@@ -138,20 +138,30 @@ export class Playlist extends queueItem {
   public readonly tracks: PlayableTrack[];
   public readonly length: number;
 
-  private expandPlaylist(queue: queueItem[]) {
-    // unshift all tracks to the front of the queue
-    queue.unshift(...this.tracks);
+  public expandPlaylist(queue: queueItem[], index = 0) {
+    if (index > queue.length || index < 0) {
+      console.error('Index ' + index + ' out of bounds in expandPlaylist');
+      return false;
+    }
+    if (!(queue[index] instanceof Playlist)) {
+      console.error('Item at index ' + index + ' is not a Playlist');
+      return false;
+    }
+    // remove the playlist &
+    // splice tracks into queue
+    queue.splice(index, 1, ...this.tracks);
+    return true;
   }
   public upNext(
     queue: queueItem[],
     queueLooping: boolean
   ): PlayableTrack | undefined {
-    if (queueLooping) {
+    /*if (queueLooping) { // Looping handled by next()
       queue.push(this);
-    }
+    }*/
     const toBeCurrentTrack = this.tracks[0];
     // remove the playlist
-    queue.shift();
+    // queue.shift(); this is now done in expandPlaylist
     // add all tracks to the front of the queue
     this.expandPlaylist(queue);
     // remove our to be current track

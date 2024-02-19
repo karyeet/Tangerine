@@ -95,10 +95,7 @@ export class PlayableTrack extends queueItem {
   public readonly lavalinkEncoded: string;
   public readonly isLiveStream: boolean;
 
-  public upNext(
-    queue: queueItem[],
-    queueLooping: boolean
-  ): PlayableTrack | undefined {
+  public upNext(queue: queueItem[]): PlayableTrack | undefined {
     queue.shift();
     return this;
   }
@@ -156,10 +153,7 @@ export class Playlist extends queueItem {
     queue.splice(index, 1, ...this.tracks);
     return true;
   }
-  public upNext(
-    queue: queueItem[],
-    queueLooping: boolean
-  ): PlayableTrack | undefined {
+  public upNext(queue: queueItem[]): PlayableTrack | undefined {
     /*if (queueLooping) { // Looping handled by next()
       queue.push(this);
     }*/

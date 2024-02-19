@@ -2,7 +2,6 @@ import {
   type ChatInputCommandInteraction,
   EmbedBuilder,
   type GuildMember,
-  Guild,
 } from 'discord.js';
 import type {queueItem} from './queue';
 import {

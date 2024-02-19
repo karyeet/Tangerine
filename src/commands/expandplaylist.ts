@@ -1,7 +1,6 @@
 import {ChatInputCommandInteraction, SlashCommandBuilder} from 'discord.js';
 import type {Musicbot} from '../classes/musicbot';
-import {Playlist, type queueItem} from '../classes/queue';
-import {buildQueueItemEmbed} from '../classes/utility';
+import {Playlist} from '../classes/queue';
 
 module.exports = {
   data: new SlashCommandBuilder()

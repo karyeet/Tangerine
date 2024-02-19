@@ -18,19 +18,34 @@ export class PlaybackManager extends Queue {
     this.guildId = guildId;
     this.forceSkipFlag = false;
 
-    musicbot.lavalink.on(
+    // FIXME: only works when defined here
+    this.trackEnded = () => {
+      console.log('Starting next track for guild ' + this.guildId);
+      let nextTrack: PlayableTrack | undefined;
+      try {
+        nextTrack = this.next(this.forceSkipFlag);
+      } catch (err) {
+        console.error('Error while getting next track:', err);
+      }
+      console.log(this.queue);
+      this.forceSkipFlag = false;
+      if (nextTrack) {
+        this.musicbot.lavalink.playTrack(this.guildId, nextTrack);
+      } else {
+        console.log('Queue ended for guild ' + this.guildId);
+      }
+    };
+  }
+
+  // for event
+  private trackEnded;
+
+  public updateListener() {
+    console.log('Updating listener for guild ' + this.guildId);
+    this.musicbot.lavalink.on(
       PlayerEvent.TrackEnd,
-      () => {
-        console.log('Starting next track for guild ' + guildId);
-        const nextTrack = this.next(this.forceSkipFlag);
-        this.forceSkipFlag = false;
-        if (nextTrack) {
-          musicbot.lavalink.playTrack(guildId, nextTrack);
-        } else {
-          console.log('Queue ended for guild ' + guildId);
-        }
-      },
-      guildId
+      this.trackEnded,
+      this.guildId
     );
   }
 
@@ -41,6 +56,10 @@ export class PlaybackManager extends Queue {
   public resume() {
     this.isPaused = false;
     this.musicbot.lavalink.resume(this.guildId);
+  }
+
+  public paused() {
+    return this.isPaused;
   }
 
   public push(item: queueItem) {

@@ -25,8 +25,20 @@ export class Musicbot {
         console.error('Error while leaving voice channel:', err);
       }
     }
+    // join voice channel
+    const joinRes = await this.lavalink.joinVoiceChannel(guildId, channelId);
+    // if join is successful, resume track playing (and pause state)
+    if (joinRes === JoinResponse.OK) {
+      const PBM = this.getPlaybackManager(guildId);
+      // on join, end event is fired so we dont manually need to resume, just listen
+      PBM.updateListener();
+      // set pause state
+      if (PBM.paused()) {
+        this.lavalink.pause(guildId);
+      }
+    }
 
-    return await this.lavalink.joinVoiceChannel(guildId, channelId);
+    return joinRes;
   }
 
   public async leaveVoiceChannel(guildId: string): Promise<void> {

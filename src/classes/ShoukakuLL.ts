@@ -210,4 +210,13 @@ export class ShoukakuLL extends LavalinkAbstract {
       return false;
     }
   }
+
+  public getPlaybackProgress(guildid: string): number {
+    const player = this.shoukakuClient.players.get(guildid);
+    if (player) {
+      return player.position;
+    } else {
+      return -1;
+    }
+  }
 }

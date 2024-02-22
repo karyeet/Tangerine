@@ -25,7 +25,7 @@ export class PlaybackManager extends Queue {
       } catch (err) {
         console.error('Error while getting next track:', err);
       }
-      console.log(this.queue);
+      // console.log(this.queue);
       this.forceSkipFlag = false;
       if (nextTrack) {
         this.musicbot.lavalink.playTrack(this.guildId, nextTrack);

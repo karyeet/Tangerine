@@ -31,13 +31,10 @@ module.exports = {
 
     const PBM = musicbot.getPlaybackManager(interaction.guildId);
     const itemsPerPage = 5;
-    const page = interaction.options.getInteger('page');
-    if (!page || page < 1) {
-      await interaction.reply({
-        content: 'Please provide a valid page.',
-        ephemeral: true,
-      });
-      return false;
+    let page = interaction.options.getInteger('page');
+    // not set or less than 1 will set to 1
+    if (!page) {
+      page = 1;
     }
 
     const interactiveQueue = new InteractiveQueue(PBM, itemsPerPage, page);
@@ -139,11 +136,9 @@ class InteractiveQueue {
     );
     // make sure page isnt too big
     if (
-      this.queueEmbedRequirements.page >
-      this.queueEmbedRequirements.totalPages - 1
+      this.queueEmbedRequirements.page > this.queueEmbedRequirements.totalPages
     ) {
-      this.queueEmbedRequirements.page =
-        this.queueEmbedRequirements.totalPages - 1;
+      this.queueEmbedRequirements.page = this.queueEmbedRequirements.totalPages;
     }
     // totalDurationString
     const totalDuration =
@@ -203,9 +198,9 @@ class InteractiveQueue {
         },
         {
           name: 'Length',
-          value: `\`${this.PBM.getPlaybackProgress}\`/${secondsToTime(
-            qer.currentTrack.duration / 1000
-          )}`,
+          value: `\`${secondsToTime(
+            this.PBM.getPlaybackProgress() / 1000
+          )}\`/${secondsToTime(qer.currentTrack.duration / 1000)}`,
           inline: true,
         },
         {

@@ -5,7 +5,6 @@ import {PlayableTrack, Queue, queueItem} from './queue';
 export class PlaybackManager extends Queue {
   private isPaused: boolean;
   // is the track in the player, regardess of whether its paused (finished tracks are not playing and are unloaded)
-  private progress: number;
   private guildId: string;
   private musicbot: Musicbot;
   private forceSkipFlag: boolean;
@@ -14,7 +13,6 @@ export class PlaybackManager extends Queue {
     super();
     this.musicbot = musicbot;
     this.isPaused = false;
-    this.progress = 0;
     this.guildId = guildId;
     this.forceSkipFlag = false;
 
@@ -76,5 +74,9 @@ export class PlaybackManager extends Queue {
     //const nextTrack = this.next(force);
     this.forceSkipFlag = force;
     this.musicbot.lavalink.stopTrack(this.guildId);
+  }
+
+  public getPlaybackProgress() {
+    return this.musicbot.lavalink.getPlaybackProgress(this.guildId);
   }
 }

@@ -74,6 +74,8 @@ export abstract class LavalinkAbstract {
 
   abstract stopTrack(guildid: string): Promise<boolean>;
 
+  abstract getPlaybackProgress(guildid: string): number;
+
   // proxy events
   abstract on(event: PlayerEvent, func: Function, guildid: string): boolean;
 }

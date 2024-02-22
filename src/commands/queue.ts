@@ -15,7 +15,14 @@ import {secondsToTime} from '../classes/utility';
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('queue')
-    .setDescription('Show the queue and whats currently playing.'),
+    .setDescription('Show the queue and whats currently playing.')
+    .addIntegerOption(option =>
+      option
+        .setMinValue(1)
+        .setRequired(false)
+        .setName('page')
+        .setDescription('Page of the queue to view. Defaults to 1.')
+    ),
   async execute(interaction: ChatInputCommandInteraction, musicbot: Musicbot) {
     if (!interaction.guildId) {
       await interaction.reply('This command only works in servers');
@@ -24,7 +31,16 @@ module.exports = {
 
     const PBM = musicbot.getPlaybackManager(interaction.guildId);
     const itemsPerPage = 5;
-    const interactiveQueue = new InteractiveQueue(PBM, itemsPerPage);
+    const page = interaction.options.getInteger('page');
+    if (!page || page < 1) {
+      await interaction.reply({
+        content: 'Please provide a valid page.',
+        ephemeral: true,
+      });
+      return false;
+    }
+
+    const interactiveQueue = new InteractiveQueue(PBM, itemsPerPage, page);
 
     interactiveQueue.sendQueueMessage(interaction);
 
@@ -48,7 +64,7 @@ class InteractiveQueue {
 
   private queueMessage: InteractionResponse | undefined;
 
-  constructor(PBM: PlaybackManager, itemsPerPage: number) {
+  constructor(PBM: PlaybackManager, itemsPerPage: number, startpage: number) {
     this.PBM = PBM;
     this.queueEmbedRequirements = {
       currentTrack: undefined,
@@ -57,7 +73,7 @@ class InteractiveQueue {
       pageItems: undefined,
       totalDurationString: undefined,
       itemsPerPage: itemsPerPage,
-      page: 0,
+      page: startpage - 1,
     };
     this.updateInformation();
   }
@@ -121,11 +137,13 @@ class InteractiveQueue {
     this.queueEmbedRequirements.totalPages = Math.ceil(
       this.PBM.queue.length / this.queueEmbedRequirements.itemsPerPage
     );
+    // make sure page isnt too big
     if (
       this.queueEmbedRequirements.page >
       this.queueEmbedRequirements.totalPages - 1
     ) {
-      this.queueEmbedRequirements.totalPages - 1;
+      this.queueEmbedRequirements.page =
+        this.queueEmbedRequirements.totalPages - 1;
     }
     // totalDurationString
     const totalDuration =

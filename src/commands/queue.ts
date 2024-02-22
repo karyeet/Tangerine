@@ -203,7 +203,9 @@ class InteractiveQueue {
         },
         {
           name: 'Length',
-          value: secondsToTime(qer.currentTrack.duration / 1000),
+          value: `\`${this.PBM.getPlaybackProgress}\`/${secondsToTime(
+            qer.currentTrack.duration / 1000
+          )}`,
           inline: true,
         },
         {

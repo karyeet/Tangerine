@@ -58,7 +58,7 @@ export class Queue {
   }
 
   public removeQueueItem(index: number): queueItem | undefined {
-    if (index < this.queue.length && index > 0) {
+    if (index < this.queue.length && index >= 0) {
       return this.queue.splice(index, 1)[0];
     } else {
       return undefined;

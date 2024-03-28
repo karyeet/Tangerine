@@ -79,4 +79,17 @@ export class PlaybackManager extends Queue {
   public getPlaybackProgress() {
     return this.musicbot.lavalink.getPlaybackProgress(this.guildId);
   }
+
+  public async seekTo(newPosition: number) {
+    const currentTrack = this.getCurrentTrack();
+    if (!currentTrack) {
+      return -1;
+    }
+    if (newPosition < 0) {
+      newPosition = 0;
+    } else if (newPosition >= currentTrack.duration) {
+      newPosition = currentTrack.duration - 1;
+    }
+    return await this.musicbot.lavalink.seekTo(this.guildId, newPosition);
+  }
 }

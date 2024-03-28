@@ -1,5 +1,7 @@
 import {ChatInputCommandInteraction, SlashCommandBuilder} from 'discord.js';
 import type {Musicbot} from '../classes/musicbot';
+import {time} from 'console';
+import {secondsToTime} from '../classes/utility';
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -36,27 +38,73 @@ module.exports = {
       await interaction.reply('This command only works in servers');
       return false;
     }
-
     const playbackManager = musicbot.getPlaybackManager(interaction.guildId);
-    const subcommand = interaction.options.getSubcommand();
-    let newPosition;
-    if (subcommand === 'to Timestamp') {
-      const timestamp = interaction.options.getString('timestamp');
-      // timestamp to miliseconds
-      // do bounds check
-      // write to newPosition
-    } else if (subcommand === 'by Seconds') {
-      const seconds = interaction.options.getString('seconds');
-      // get current position, add seconds
-      // write to newPosition
+    if (!playbackManager || !playbackManager.getCurrentTrack()) {
+      await interaction.reply({
+        content: 'No track is currently playing',
+        ephemeral: true,
+      });
+      return false;
     }
 
-    // set min and max bounds
-    // seek to bounded newPosition
+    const subcommand = interaction.options.getSubcommand();
+    let newPosition = 0;
+    if (subcommand === 'to Timestamp') {
+      const timestamp = interaction.options.getString('timestamp');
+      if (!timestamp) {
+        await interaction.reply({
+          content: 'No timestamp provided.',
+          ephemeral: true,
+        });
+        return false;
+      }
+      const timeStrings = timestamp.split(':');
+      if (timeStrings.length > 3 || timeStrings.length < 1) {
+        await interaction.reply({
+          content:
+            'Timestamp too long or too short. Use format HH:MM:SS or MM:SS or SS.',
+          ephemeral: true,
+        });
+        return false;
+      }
+      // fill in missing time stamp elements
+      for (let i = timeStrings.length; i < 3; i++) {
+        timeStrings.unshift('00');
+      }
+      // parse timestamp timestamp to miliseconds...
+      const miliseconds = Date.parse(
+        `Thu, 01 Jan 1970 ${timeStrings[0]}:${timeStrings[1]}:${timeStrings[2]} GMT`
+      );
+      // check if successful
+      if (isNaN(miliseconds)) {
+        await interaction.reply({
+          content:
+            'Invalid timestamp provided. Use format HH:MM:SS or MM:SS or SS.',
+          ephemeral: true,
+        });
+        return false;
+      }
+      // write to newPosition
+      newPosition = miliseconds;
+    } else if (subcommand === 'by Seconds') {
+      const seconds = interaction.options.getInteger('seconds');
+      if (!seconds) {
+        await interaction.reply({
+          content: 'No seconds provided.',
+          ephemeral: true,
+        });
+        return false;
+      }
+      // get current position, add seconds
+      const currentPosition = playbackManager.getPlaybackProgress();
+      newPosition = currentPosition + seconds * 1000;
+    }
 
+    // seek (bounds check done in seekTo)
+    await playbackManager.seekTo(newPosition);
     // respond
     await interaction.reply({
-      content: 'Seeked to -timestamp-!',
+      content: `Seeked to ${secondsToTime(newPosition / 1000)}!`,
       ephemeral: true,
     });
     return true;

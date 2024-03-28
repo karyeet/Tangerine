@@ -107,7 +107,7 @@ module.exports = {
     // respond
     await interaction.reply({
       content: `Seeked to ${secondsToTime(newPosition / 1000)}!`,
-      ephemeral: true,
+      ephemeral: false,
     });
     return true;
   },

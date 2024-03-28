@@ -76,6 +76,9 @@ export abstract class LavalinkAbstract {
 
   abstract getPlaybackProgress(guildid: string): number;
 
+  // position in milliseconds, return new position
+  abstract seekTo(guildid: string, position: number): Promise<number>;
+
   // proxy events
   abstract on(event: PlayerEvent, func: Function, guildid: string): boolean;
 }

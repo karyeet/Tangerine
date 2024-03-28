@@ -219,4 +219,14 @@ export class ShoukakuLL extends LavalinkAbstract {
       return -1;
     }
   }
+
+  public async seekTo(guildid: string, position: number): Promise<number> {
+    const player = this.shoukakuClient.players.get(guildid);
+    if (player) {
+      await player.seekTo(position);
+      return this.getPlaybackProgress(guildid);
+    } else {
+      return -1;
+    }
+  }
 }

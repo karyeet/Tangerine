@@ -21,7 +21,7 @@ module.exports = {
 
     await interaction.reply({
       content: 'Skipped!',
-      ephemeral: true,
+      ephemeral: false,
     });
     return true;
   },

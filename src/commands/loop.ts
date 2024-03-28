@@ -27,13 +27,13 @@ module.exports = {
       PBM.setTrackLooping(!PBM.isTrackLooping());
       await interaction.reply({
         content: `Toggled looping track to ${PBM.isTrackLooping()}!`,
-        ephemeral: true,
+        ephemeral: false,
       });
     } else {
       PBM.setQueueLooping(!PBM.isQueueLooping());
       await interaction.reply({
         content: `Toggled looping queue to ${PBM.isQueueLooping()}!`,
-        ephemeral: true,
+        ephemeral: false,
       });
     }
 

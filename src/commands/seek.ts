@@ -9,8 +9,10 @@ module.exports = {
     .setDescription('Seek to a specific position in the current track')
     .addSubcommand(subcommand =>
       subcommand
-        .setName('to Timestamp')
-        .setDescription('Seek to a time formatted as such: MM:SS or HH:MM:SS')
+        .setName('totimestamp')
+        .setDescription(
+          'Seek to a time formatted as such: HH:MM:SS or MM:SS or SS'
+        )
         .addStringOption(option =>
           option
             .setName('timestamp')
@@ -20,7 +22,7 @@ module.exports = {
     )
     .addSubcommand(subcommand =>
       subcommand
-        .setName('by Seconds')
+        .setName('byseconds')
         .setDescription(
           'Seek forward or backwards by a number of seconds from the current position'
         )
@@ -49,7 +51,7 @@ module.exports = {
 
     const subcommand = interaction.options.getSubcommand();
     let newPosition = 0;
-    if (subcommand === 'to Timestamp') {
+    if (subcommand === 'totimestamp') {
       const timestamp = interaction.options.getString('timestamp');
       if (!timestamp) {
         await interaction.reply({
@@ -86,7 +88,7 @@ module.exports = {
       }
       // write to newPosition
       newPosition = miliseconds;
-    } else if (subcommand === 'by Seconds') {
+    } else if (subcommand === 'byseconds') {
       const seconds = interaction.options.getInteger('seconds');
       if (!seconds) {
         await interaction.reply({

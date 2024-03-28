@@ -1,6 +1,5 @@
 import {ChatInputCommandInteraction, SlashCommandBuilder} from 'discord.js';
 import type {Musicbot} from '../classes/musicbot';
-import {time} from 'console';
 import {secondsToTime} from '../classes/utility';
 
 module.exports = {

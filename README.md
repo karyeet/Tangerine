@@ -4,13 +4,12 @@ A Node.js Discord music bot made using Discord.js & lavalink.
 
 Features:
 - Multiple Sources through Lavalink and Lavasrc: YouTube, Spotify, Deezer, Soundcloud, etc
-- Basic functions: join, leave, loop, play, skip, remove from queue
+- Basic functions: join, leave, loop, play, skip, remove from queue, seek
 - Interactive queue command that shows playback progress
 - Supports playlists/albums, the entire playlist is shown as a single item until it reaches the front of the queue
 - Playlists and albums are added as a single queue object until they reach the front of the queue or are expanded with /expandplaylist.
 
 Todo:
-- seek
 - Playlist/album search
 - Docker Container
 - Tests

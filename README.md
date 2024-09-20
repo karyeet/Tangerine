@@ -17,7 +17,7 @@ Todo:
 
 ## Setup:
 
-You'll need Node v20 or greaterm, NPM, and a Lavalink node with the Lavasrc plugin and installed and setup.
+You'll need Node v20 or greater, NPM, and a Lavalink node with the Lavasrc plugin and installed and setup.
 
 1. Clone or download the source: 
 

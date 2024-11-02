@@ -57,6 +57,10 @@ export class Queue {
     this.queue.push(item);
   }
 
+  public unshift(item: queueItem) {
+    this.queue.unshift(item);
+  }
+
   public removeQueueItem(index: number): queueItem | undefined {
     if (index < this.queue.length && index >= 0) {
       return this.queue.splice(index, 1)[0];

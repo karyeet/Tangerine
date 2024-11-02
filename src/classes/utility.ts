@@ -1,4 +1,5 @@
 import {
+  APIEmbedField,
   type ChatInputCommandInteraction,
   EmbedBuilder,
   type GuildMember,
@@ -22,6 +23,7 @@ export function secondsToTime(seconds: number) {
 
 export interface buildQueueItemEmbedOptions {
   color?: number;
+  queuePosition?: number;
   requesterName?: string | null;
   requesterAvatarURL?: string | null;
 }
@@ -34,22 +36,31 @@ export function buildQueueItemEmbed(
   if (!options || !options.color) {
     options.color = 0xffa500;
   }
+  const fields: APIEmbedField[] = [
+    {
+      name: 'Artist',
+      value: qItem.author,
+      inline: true,
+    },
+    {
+      name: 'Length',
+      value: secondsToTime(qItem.duration / 1000),
+      inline: true,
+    },
+  ];
+  if (options.queuePosition) {
+    fields.push({
+      name: 'Position',
+      value: String(options.queuePosition),
+      inline: true,
+    });
+  }
+
   const embed = new EmbedBuilder()
     .setTitle(title)
     .setDescription(qItem.title)
     .setColor(options.color)
-    .addFields(
-      {
-        name: 'Artist',
-        value: qItem.author,
-        inline: true,
-      },
-      {
-        name: 'Length',
-        value: secondsToTime(qItem.duration / 1000),
-        inline: true,
-      }
-    )
+    .addFields(fields)
     .setThumbnail(qItem.artwork);
   if (options.requesterAvatarURL && options.requesterName) {
     embed.setFooter({
@@ -74,6 +85,8 @@ export async function addToQueue(
     await interaction.reply('Invalid query');
     return false;
   }
+
+  const playNext = interaction.options.getBoolean('playnext') || false;
 
   await interaction.reply({
     content: 'Loading track!',
@@ -144,10 +157,11 @@ export async function addToQueue(
     const playbackManager: PlaybackManager = musicbot.getPlaybackManager(
       interaction.guildId
     );
-    playbackManager.push(result.data);
+    const queuePosition = playbackManager.add(result.data, playNext);
     await interaction.followUp({
       embeds: [
         buildQueueItemEmbed(result.data, 'Added To Queue', {
+          queuePosition: queuePosition,
           requesterName: interaction.member?.user.username,
           requesterAvatarURL: (
             interaction.member as GuildMember

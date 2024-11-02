@@ -13,6 +13,9 @@ module.exports = {
         .setDescription('Song title or any URL')
         .setRequired(true)
         .setMaxLength(100)
+    )
+    .addBooleanOption(option =>
+      option.setName('playnext').setDescription('Play next in queue')
     ),
   async execute(interaction: ChatInputCommandInteraction, musicbot: Musicbot) {
     addToQueue('spsearch', interaction, musicbot);

@@ -60,14 +60,21 @@ export class PlaybackManager extends Queue {
     return this.isPaused;
   }
 
-  public push(item: queueItem) {
-    super.push(item);
+  public add(item: queueItem, unshift = false) {
+    let ret = 1;
+    if (unshift) {
+      super.unshift(item);
+    } else {
+      super.push(item);
+      ret = super.getLength();
+    }
     if (!this.getCurrentTrack()) {
       this.musicbot.lavalink.playTrack(
         this.guildId,
         this.next() as PlayableTrack
       );
     }
+    return ret;
   }
 
   public skip(force: boolean) {

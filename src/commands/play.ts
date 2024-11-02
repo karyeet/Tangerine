@@ -13,6 +13,9 @@ module.exports = {
         .setDescription('YT video title or any URL')
         .setRequired(true)
         .setMaxLength(100)
+    )
+    .addBooleanOption(option =>
+      option.setName('playnext').setDescription('Play next in queue')
     ),
   async execute(interaction: ChatInputCommandInteraction, musicbot: Musicbot) {
     addToQueue('ytsearch', interaction, musicbot);

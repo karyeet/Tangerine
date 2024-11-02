@@ -155,7 +155,7 @@ export class ShoukakuLL extends LavalinkAbstract {
   ): Promise<PlayResponse> {
     const player = this.shoukakuClient.players.get(guildid);
     if (player) {
-      await player.playTrack({track: playableTrack.lavalinkEncoded});
+      await player.playTrack({track: {encoded: playableTrack.lavalinkEncoded}});
       return PlayResponse.OK;
     } else {
       return PlayResponse.notInVoiceChannel;

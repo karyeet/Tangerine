@@ -96,8 +96,12 @@ export class ShoukakuLL extends LavalinkAbstract {
   }
   private LLToPlaylist(data: any): Playlist {
     const title = data.info.name;
-    const author = data?.pluginInfo?.author || '';
-    const artwork = data?.pluginInfo?.artworkUrl || '';
+    const author = data?.pluginInfo?.author || 'Unknown';
+    const artwork =
+      data?.pluginInfo?.artworkUrl || data?.tracks
+        ? data?.tracks[0]?.info?.artworkUrl ||
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoiMtJG_PC4lsb3-GZAiTZkUXAm3VlkJC1Ag&s'
+        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoiMtJG_PC4lsb3-GZAiTZkUXAm3VlkJC1Ag&s';
     const tracks: PlayableTrack[] = [];
     for (const trackdata of data.tracks) {
       tracks.push(this.LLToPlayableTrack(trackdata));

@@ -25,6 +25,7 @@
   "homepage": "https://github.com/karyeet/Mandarin2#readme",
   "devDependencies": {
     "@types/node": "20.8.2",
+    "@types/string-similarity": "^4.0.2",
     "gts": "^5.2.0",
     "node-fetch": "^2.7.0",
     "typescript": "^5.3.3"
@@ -33,6 +34,7 @@
     "bufferutil": "^4.0.8",
     "discord.js": "^14.14.1",
     "shoukaku": "^4.0.1",
+    "string-similarity": "^4.0.4",
     "utf-8-validate": "^6.0.3",
     "zlib-sync": "^0.1.9"
   }

@@ -1,6 +1,6 @@
 import type {Client} from 'discord.js';
 
-import {Shoukaku, Connectors, NodeOption, NodeInfo} from 'shoukaku';
+import {Shoukaku, Connectors, NodeOption, NodeInfo, Track} from 'shoukaku';
 import {
   JoinResponse,
   LavalinkAbstract,
@@ -11,6 +11,8 @@ import {
 } from './LavalinkAbstract';
 
 import {PlayableTrack, Playlist} from './queue';
+
+import stringSimilarity from 'string-similarity';
 
 export class ShoukakuLL extends LavalinkAbstract {
   private shoukakuClient: Shoukaku;
@@ -110,6 +112,14 @@ export class ShoukakuLL extends LavalinkAbstract {
     return new Playlist(title, author, artwork, tracks);
   }
 
+  public GetClosestMatchingIndex(query: string, tracks: Track[]): number {
+    const trackNames = tracks.map(
+      item => `${item.info.author} ${item.info.title}`
+    );
+    const matches = stringSimilarity.findBestMatch(query, trackNames);
+    return matches.bestMatchIndex;
+  }
+
   public async resolve(query: string): Promise<ResolveResponse> {
     const node = this.getNodeWithLeastLoad();
     if (node === undefined) {
@@ -136,7 +146,9 @@ export class ShoukakuLL extends LavalinkAbstract {
       case 'search':
         return {
           loadType: LoadResultType.track,
-          data: this.LLToPlayableTrack(result.data[0]),
+          data: this.LLToPlayableTrack(
+            result.data[this.GetClosestMatchingIndex(query, result.data)]
+          ),
         };
       case 'empty':
         return {

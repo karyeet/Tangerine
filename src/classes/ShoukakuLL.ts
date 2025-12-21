@@ -21,7 +21,7 @@ export class ShoukakuLL extends LavalinkAbstract {
     super(); // nothing
     this.shoukakuClient = new Shoukaku(
       new Connectors.DiscordJS(discordClient),
-      Nodes
+      Nodes,
     );
     this.shoukakuClient.on('error', error => {
       console.error('Shoukaku error:', error);
@@ -30,7 +30,7 @@ export class ShoukakuLL extends LavalinkAbstract {
 
   private getNodeWithLeastLoad() {
     const node = this.shoukakuClient.options.nodeResolver(
-      this.shoukakuClient.nodes
+      this.shoukakuClient.nodes,
     );
     return node;
   }
@@ -68,7 +68,7 @@ export class ShoukakuLL extends LavalinkAbstract {
   public async joinVoiceChannel(
     guildId: string,
     channelId: string,
-    shardId = 0 // if unsharded it will always be zero
+    shardId = 0, // if unsharded it will always be zero
   ): Promise<JoinResponse> {
     //    if (this.shoukakuClient.players.get(guildId)) {
     //      return JoinResponse.alreadyInVoiceChannel;
@@ -93,7 +93,7 @@ export class ShoukakuLL extends LavalinkAbstract {
       trackdata.info.artworkUrl,
       trackdata.info.length,
       trackdata.encoded,
-      false || trackdata.info.isStream
+      false || trackdata.info.isStream,
     );
   }
   private LLToPlaylist(data: any): Playlist {
@@ -114,7 +114,7 @@ export class ShoukakuLL extends LavalinkAbstract {
 
   public GetClosestMatchingIndex(query: string, tracks: Track[]): number {
     const trackNames = tracks.map(
-      item => `${item.info.author} ${item.info.title}`
+      item => `${item.info.author} ${item.info.title}`,
     );
     const matches = stringSimilarity.findBestMatch(query, trackNames);
     return matches.bestMatchIndex;
@@ -147,7 +147,7 @@ export class ShoukakuLL extends LavalinkAbstract {
         return {
           loadType: LoadResultType.track,
           data: this.LLToPlayableTrack(
-            result.data[this.GetClosestMatchingIndex(query, result.data)]
+            result.data[this.GetClosestMatchingIndex(query, result.data)],
           ),
         };
       case 'empty':
@@ -167,7 +167,7 @@ export class ShoukakuLL extends LavalinkAbstract {
 
   public async playTrack(
     guildid: string,
-    playableTrack: PlayableTrack
+    playableTrack: PlayableTrack,
   ): Promise<PlayResponse> {
     const player = this.shoukakuClient.players.get(guildid);
     if (player) {
@@ -201,17 +201,27 @@ export class ShoukakuLL extends LavalinkAbstract {
   public on(
     event: PlayerEvent,
     listener: (data: any) => void,
-    guildid: string
+    guildid: string,
   ): boolean {
     const player = this.shoukakuClient.players.get(guildid);
+    console.log(
+      'Adding event listener for guild ' + guildid,
+      ', event ',
+      event,
+    );
     if (player) {
-      player.on(event as any, listener);
+      player.on(event as any, data => {
+        console.log(
+          'Event triggered for guild ' + guildid + ', event ' + event,
+        );
+        listener(data);
+      });
       return true;
     } else {
       console.error(
         'Could not find player for guildid ' +
           guildid +
-          ' when adding event listener'
+          ' when adding event listener',
       );
       return false;
     }

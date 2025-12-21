@@ -39,12 +39,27 @@ export class PlaybackManager extends Queue {
   private trackEnded;
 
   public updateListener() {
-    console.log('Updating listener for guild ' + this.guildId);
+    console.log('Updating listeners for guild ' + this.guildId);
     this.musicbot.lavalink.on(
       PlayerEvent.TrackEnd,
       this.trackEnded,
-      this.guildId
+      this.guildId,
     );
+    this.musicbot.lavalink.on(
+      PlayerEvent.TrackException,
+      this.trackEnded,
+      this.guildId,
+    );
+    this.musicbot.lavalink.on(
+      PlayerEvent.TrackStuck,
+      this.trackEnded,
+      this.guildId,
+    );
+    /* this.musicbot.lavalink.on(
+      PlayerEvent.WsClosed,
+      this.trackEnded,
+      this.guildId,
+    ); */
   }
 
   public pause() {

@@ -144,12 +144,20 @@ export class ShoukakuLL extends LavalinkAbstract {
           data: this.LLToPlaylist(result.data),
         };
       case 'search':
-        return {
-          loadType: LoadResultType.track,
-          data: this.LLToPlayableTrack(
-            result.data[this.GetClosestMatchingIndex(query, result.data)],
-          ),
-        };
+        // spotify search is more accurate than string-similarity so skip it for spsearch.
+        if (query.startsWith('spsearch:')) {
+          return {
+            loadType: LoadResultType.track,
+            data: this.LLToPlayableTrack(result.data[0]),
+          };
+        } else {
+          return {
+            loadType: LoadResultType.track,
+            data: this.LLToPlayableTrack(
+              result.data[this.GetClosestMatchingIndex(query, result.data)],
+            ),
+          };
+        }
       case 'empty':
         return {
           loadType: LoadResultType.empty,

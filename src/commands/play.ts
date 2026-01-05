@@ -1,7 +1,7 @@
 import {ChatInputCommandInteraction, SlashCommandBuilder} from 'discord.js';
 import type {Musicbot} from '../classes/musicbot';
 
-import {addToQueue} from '../classes/utility';
+import {addToQueueCommandEntry} from '../classes/utility';
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,6 +18,6 @@ module.exports = {
       option.setName('playnext').setDescription('Play next in queue')
     ),
   async execute(interaction: ChatInputCommandInteraction, musicbot: Musicbot) {
-    addToQueue('ytsearch', interaction, musicbot);
+    addToQueueCommandEntry('ytsearch', interaction, musicbot);
   },
 };

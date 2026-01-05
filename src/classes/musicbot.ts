@@ -1,22 +1,25 @@
 import type {Client} from 'discord.js';
 import {JoinResponse, LavalinkAbstract} from './LavalinkAbstract';
 import {PlaybackManager} from './PlaybackManager';
+import {SpotifyActivityTracker} from './SpotifyActivityTracker';
 
 export class Musicbot {
   public lavalink: LavalinkAbstract;
   public discordClient: Client;
+  public presenceTracker: SpotifyActivityTracker;
   private guildPlaybackManagers: Map<string, PlaybackManager> = new Map();
 
   constructor(lavalink: LavalinkAbstract, client: Client) {
     this.lavalink = lavalink;
     this.discordClient = client;
+    this.presenceTracker = new SpotifyActivityTracker(client);
   }
   // channelid/guildid from interaction
   // force, call disconnect before joining
   public async joinVoiceChannel(
     guildId: string,
     channelId: string,
-    force: boolean
+    force: boolean,
   ): Promise<JoinResponse> {
     if (force) {
       try {

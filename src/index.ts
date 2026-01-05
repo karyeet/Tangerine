@@ -7,7 +7,12 @@ import {CommandManager} from './classes/CommandManager';
 
 const Nodes = [node];
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildPresences,
+  ],
 });
 
 const lavalink = new ShoukakuLL(client, Nodes);
@@ -26,13 +31,13 @@ client.on(Events.InteractionCreate, async interaction => {
     await commandManager.executeCommand(
       interaction.commandName,
       interaction,
-      musicbot
+      musicbot,
     );
   } catch (error) {
     console.error(
       'Error occured while executing command',
       interaction.commandName,
-      error
+      error,
     );
     try {
       if (interaction.replied || interaction.deferred) {

@@ -113,11 +113,22 @@ export class ShoukakuLL extends LavalinkAbstract {
   }
 
   public GetClosestMatchingIndex(query: string, tracks: Track[]): number {
-    const trackNames = tracks.map(
-      item => `${item.info.author} ${item.info.title}`,
+    const trackCandidates = tracks.map(item =>
+      `${item.info.author} ${item.info.title}`.toLowerCase(),
     );
-    const matches = stringSimilarity.findBestMatch(query, trackNames);
-    return matches.bestMatchIndex;
+    trackCandidates.push(
+      ...tracks.map(item =>
+        `${item.info.title} ${item.info.author}`.toLowerCase(),
+      ),
+    );
+    const tracks_length = tracks.length;
+    trackCandidates.push(...tracks.map(item => item.info.title.toLowerCase()));
+    const matches = stringSimilarity.findBestMatch(
+      query.toLowerCase(),
+      trackCandidates,
+    );
+    const best_match_idx = matches.bestMatchIndex % tracks_length;
+    return best_match_idx;
   }
 
   public async resolve(query: string): Promise<ResolveResponse> {

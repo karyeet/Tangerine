@@ -18,6 +18,6 @@ module.exports = {
       option.setName('playnext').setDescription('Play next in queue')
     ),
   async execute(interaction: ChatInputCommandInteraction, musicbot: Musicbot) {
-    addToQueueCommandEntry('spsearch', interaction, musicbot);
+    addToQueueCommandEntry('dzsearch', interaction, musicbot);
   },
 };
